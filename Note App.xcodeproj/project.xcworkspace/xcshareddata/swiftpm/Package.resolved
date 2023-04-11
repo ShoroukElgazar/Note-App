@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "modelmapper-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ShabanKamell/ModelMapper-Swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "65655aaee684bb0c8485dff51e47eba8112a5954"
+      }
+    },
+    {
+      "identity" : "swiftuinavigator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Open-Bytes/SwiftUINavigator",
+      "state" : {
+        "branch" : "master",
+        "revision" : "10331bdb5d0b6381cdb587a1d7ad32fdd3f11177"
+      }
+    }
+  ],
+  "version" : 2
+}
