@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97F33F3829E709FA008E19F0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F33F3729E709FA008E19F0 /* SearchBar.swift */; };
 		97F71A9929E37330003C7768 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F71A9829E37330003C7768 /* FloatingButton.swift */; };
 		97F71A9B29E383C9003C7768 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F71A9A29E383C9003C7768 /* CardView.swift */; };
 		97F71A9D29E385B9003C7768 /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F71A9C29E385B9003C7768 /* NoteListView.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		97F33F3729E709FA008E19F0 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		97F71A9829E37330003C7768 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		97F71A9A29E383C9003C7768 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		97F71A9C29E385B9003C7768 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				97F71A9A29E383C9003C7768 /* CardView.swift */,
 				97F71A9E29E38E98003C7768 /* RingActivityIndicator.swift */,
 				97F71AA429E3A68B003C7768 /* TextEditorView.swift */,
+				97F33F3729E709FA008E19F0 /* SearchBar.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				97F7935029DEE28700C16803 /* Note_App.swift in Sources */,
 				97F71A9F29E38E98003C7768 /* RingActivityIndicator.swift in Sources */,
 				97F7938129DF1CC700C16803 /* NoteVM.swift in Sources */,
+				97F33F3829E709FA008E19F0 /* SearchBar.swift in Sources */,
 				97F793C729E22C0500C16803 /* NoteRepo.swift in Sources */,
 				97F71AA129E38F06003C7768 /* ActivityView.swift in Sources */,
 				97F7938529DF6EA500C16803 /* AddNoteView.swift in Sources */,

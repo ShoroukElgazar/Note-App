@@ -13,7 +13,7 @@ struct CompletedNotesView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Note>
-
+    @State var searchText: String = ""
     @State var title: String = ""
     @State var data: String = ""
     @State var isCompleted: Bool = false
@@ -25,15 +25,17 @@ struct CompletedNotesView: View {
     @State var shareSheetItems: [Any] = []
     var body: some View {
         NavigationView {
+            VStack{
+                SearchBar(text: $searchText)
             ZStack
-            {
-                NoteListView(vm: vm,type: .completed,shareCompletion: { item in
-                    shareNote(item: item)
-                }, deleteCompletion: { item in
-                    deleteNote(item: vm.mapNoteEntityToModel(note: item))
-                }, playSoundCompletion: {
-                    
-                })
+                {
+                    NoteListView(searchText: $searchText, vm: vm,type: .completed,shareCompletion: { item in
+                        shareNote(item: item)
+                    }, deleteCompletion: { item in
+                        deleteNote(item: vm.mapNoteEntityToModel(note: item))
+                    }, playSoundCompletion: {
+                        
+                    })
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Text(Strings.completedNotes)
@@ -45,7 +47,7 @@ struct CompletedNotesView: View {
                     .sheet(isPresented: $showShareSheet, content: {
                         ActivityViewController(activityItems: self.$shareSheetItems)
                     })
-                                
+                }
             }
         }
     }

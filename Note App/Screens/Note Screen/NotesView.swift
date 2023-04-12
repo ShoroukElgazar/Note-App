@@ -26,13 +26,15 @@ struct NotesView: View {
     @State private var showShareSheet: Bool = false
     @State var shareSheetItems: [Any] = []
     @State private var searchText = ""
+    @State var isEditing: Bool = false
     
     var body: some View {
         NavigationView {
             VStack{
+                SearchBar(text: $searchText)
                 ZStack
                 {
-                    NoteListView(vm: vm,type: .incompleted,shareCompletion: { item in
+                    NoteListView(searchText: $searchText, vm: vm,type: .incompleted,shareCompletion: { item in
                         shareNote(item: item)
                     }, deleteCompletion: { item in
                         deleteNote(item: vm.mapNoteEntityToModel(note: item))
@@ -55,7 +57,6 @@ struct NotesView: View {
                     
                 }
             }
-//            .navigationBarTitle("", displayMode: .inline)
         }
     }
     

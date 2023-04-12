@@ -13,21 +13,23 @@ struct NoteListView: View{
         animation: .default)
     
      var items: FetchedResults<Note>
+   @Binding var searchText : String
     var vm : NoteVM
     var type: NoteType
     var shareCompletion: (Note) -> Void
     var deleteCompletion: (Note) -> Void
     var playSoundCompletion: () -> Void
     @State private var completedNotesCount = 0.0
-    @State private var searchText = ""
     @State private var inCompletedItems : [FetchedResults<Note>.Element] = []
     
     var body: some View {
+        VStack{
             ListView()
+        }
         }
     
     private func ListView() -> some View {
-        let isEmpty = (type == .completed ? loadCompletedNotes() : loadInCompletedNotes()).isEmpty
+        let isEmpty = (type == .completed ? loadCompletedNotes(searchText: searchText) : loadInCompletedNotes(searchText: searchText)).isEmpty
       return  VStack{
             if isEmpty{
               EmptyField()
@@ -50,7 +52,7 @@ struct NoteListView: View{
     }
     private func NoteList() -> some View {
         List {
-            ForEach(type == .completed ? loadCompletedNotes() : loadInCompletedNotes()) { item in
+            ForEach(type == .completed ? loadCompletedNotes(searchText: searchText) : loadInCompletedNotes(searchText: searchText)) { item in
                 ZStack{
                     NoteItem(item: item)
                         .swipeActions(allowsFullSwipe: false) {
@@ -111,17 +113,17 @@ struct NoteListView: View{
         }
     }
     
-    private func loadInCompletedNotes() ->  [FetchedResults<Note>.Element] {
+    private func loadInCompletedNotes(searchText: String) ->  [FetchedResults<Note>.Element] {
         let filteredNotes = items.filter { !$0.isCompleted}
-       return loadFilteredNotes(notes: filteredNotes)
+        return loadFilteredNotes(searchText: searchText, notes: filteredNotes)
     }
 
-    private func loadCompletedNotes() ->  [FetchedResults<Note>.Element] {
+    private func loadCompletedNotes(searchText: String) ->  [FetchedResults<Note>.Element] {
         let filteredNotes = items.filter { $0.isCompleted}
-        return loadFilteredNotes(notes: filteredNotes)
+        return loadFilteredNotes(searchText: searchText, notes: filteredNotes)
     }
     
-    private func loadFilteredNotes(notes: [FetchedResults<Note>.Element])->  [FetchedResults<Note>.Element] {
+    private func loadFilteredNotes(searchText: String,notes: [FetchedResults<Note>.Element])->  [FetchedResults<Note>.Element] {
         if searchText.isEmpty{
             return notes
         }else{
