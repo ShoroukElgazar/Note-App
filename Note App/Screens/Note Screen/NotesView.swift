@@ -31,7 +31,7 @@ struct NotesView: View {
     var body: some View {
         NavigationView {
             VStack{
-                SearchBar(text: $searchText)
+//                SearchBar(text: $searchText)
                 ZStack
                 {
                     NoteListView(searchText: $searchText, vm: vm,type: .incompleted,shareCompletion: { item in
