@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		976B6EF329E8EBE600AF045A /* NoteSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 976B6EF229E8EBE600AF045A /* NoteSound.mp3 */; };
 		97F33F3829E709FA008E19F0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F33F3729E709FA008E19F0 /* SearchBar.swift */; };
 		97F71A9929E37330003C7768 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F71A9829E37330003C7768 /* FloatingButton.swift */; };
 		97F71A9B29E383C9003C7768 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F71A9A29E383C9003C7768 /* CardView.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		976B6EF229E8EBE600AF045A /* NoteSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NoteSound.mp3; sourceTree = "<group>"; };
 		97F33F3729E709FA008E19F0 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		97F71A9829E37330003C7768 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		97F71A9A29E383C9003C7768 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				97F793D029E284F100C16803 /* sound.mp3 */,
+				976B6EF229E8EBE600AF045A /* NoteSound.mp3 */,
 				97F7935A29DEE28900C16803 /* Note_App.xcdatamodeld */,
 			);
 			path = AppFiles;
@@ -417,6 +420,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				976B6EF329E8EBE600AF045A /* NoteSound.mp3 in Resources */,
 				97F793D129E284F200C16803 /* sound.mp3 in Resources */,
 				97F7935729DEE28900C16803 /* Preview Assets.xcassets in Resources */,
 				97F7935429DEE28900C16803 /* Assets.xcassets in Resources */,

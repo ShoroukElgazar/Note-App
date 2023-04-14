@@ -15,7 +15,7 @@ struct NotesView: View {
     
     private var items: FetchedResults<Note>
     //TODO:- sound
-    let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "sound", ofType: "mp3")!))
+    let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "NoteSound", ofType: "mp3")!))
     @State var title: String = ""
     @State var data: String = ""
     @State var isCompleted: Bool = false
@@ -30,36 +30,38 @@ struct NotesView: View {
     
     var body: some View {
         NavigationView {
-            VStack{
-//                SearchBar(text: $searchText)
                 ZStack
                 {
-                    NoteListView(searchText: $searchText, vm: vm,type: .incompleted,shareCompletion: { item in
-                        shareNote(item: item)
-                    }, deleteCompletion: { item in
-                        deleteNote(item: vm.mapNoteEntityToModel(note: item))
-                    }, playSoundCompletion: {
-                        player?.play()
-                    })
-                    
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Text(Strings.noteAPP)
-                                .font(.system(size: 25))
-                                .fontWeight(.bold)
-                                .foregroundColor(.indigo)
-                        }
-                    }
-                    .sheet(isPresented: $showShareSheet, content: {
-                        ActivityViewController(activityItems: self.$shareSheetItems)
-                    })
+                    NoteView()
                     AddButton()
                     
                 }
-            }
         }
     }
     
+    
+    private func NoteView() -> some View {
+        NoteListView(searchText: $searchText, vm: vm,type: .incompleted,shareCompletion: { item in
+            shareNote(item: item)
+        }, deleteCompletion: { item in
+            deleteNote(item: vm.mapNoteEntityToModel(note: item))
+        }, playSoundCompletion: {
+            player?.play()
+        })
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Text(Strings.noteAPP)
+                    .font(.system(size: 25))
+                    .fontWeight(.bold)
+                    .foregroundColor(.indigo)
+            }
+        }
+        .sheet(isPresented: $showShareSheet, content: {
+            ActivityViewController(activityItems: self.$shareSheetItems)
+        })
+    }
+
     private func AddButton() -> some View {
             FloatingButton(destination:   AddNoteView.build()
                 .environment(\.managedObjectContext,self.viewContext)
@@ -72,7 +74,6 @@ struct NotesView: View {
         }
     }
     
-
     private func shareNote(item: Note){
         showShareSheet = true
         let shareItems = vm.shareNote(note: vm.mapNoteEntityToModel(note: item))

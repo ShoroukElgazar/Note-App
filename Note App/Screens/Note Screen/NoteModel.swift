@@ -22,6 +22,7 @@ public class NoteItemMapper: Mapper {
         return NoteModel(title: input.title!, data: input.data!, isCompleted: input.isCompleted, timeStamp: input.timestamp!)
     }
 }
+
 public class NoteEntityMapper: Mapper {
 
 var viewContext: NSManagedObjectContext

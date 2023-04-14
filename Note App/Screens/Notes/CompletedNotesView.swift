@@ -25,34 +25,34 @@ struct CompletedNotesView: View {
     @State var shareSheetItems: [Any] = []
     var body: some View {
         NavigationView {
-            VStack{
-//                SearchBar(text: $searchText)
             ZStack
                 {
-                    NoteListView(searchText: $searchText, vm: vm,type: .completed,shareCompletion: { item in
-                        shareNote(item: item)
-                    }, deleteCompletion: { item in
-                        deleteNote(item: vm.mapNoteEntityToModel(note: item))
-                    }, playSoundCompletion: {
-                        
-                    })
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Text(Strings.completedNotes)
-                                .font(.system(size: 25))
-                                .fontWeight(.bold)
-                                .foregroundColor(.indigo)
-                        }
-                    }
-                    .sheet(isPresented: $showShareSheet, content: {
-                        ActivityViewController(activityItems: self.$shareSheetItems)
-                    })
+            NoteView()
                 }
-            }
         }
     }
 
-
+    private func NoteView() -> some View {
+        NoteListView(searchText: $searchText, vm: vm,type: .completed,shareCompletion: { item in
+            shareNote(item: item)
+        }, deleteCompletion: { item in
+            deleteNote(item: vm.mapNoteEntityToModel(note: item))
+        }, playSoundCompletion: {
+            
+        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Text(Strings.completedNotes)
+                    .font(.system(size: 25))
+                    .fontWeight(.bold)
+                    .foregroundColor(.indigo)
+            }
+        }
+        .sheet(isPresented: $showShareSheet, content: {
+            ActivityViewController(activityItems: self.$shareSheetItems)
+        })
+    }
+    
     private func deleteNote(item: NoteModel) {
         withAnimation {
             vm.deleteNote(note: item)

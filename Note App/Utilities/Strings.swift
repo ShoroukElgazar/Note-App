@@ -21,6 +21,8 @@ class Strings{
     static let noNotes = "You don't have any notes yet."
     static let delete = "Delete"
     static let share = "Share"
+    static let search = "Search ..."
+    static let noAvailableNotes = "There are no available notes"
   
 }
 

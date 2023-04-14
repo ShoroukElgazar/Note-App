@@ -12,8 +12,8 @@ struct NoteListView: View{
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
         animation: .default)
     
-     var items: FetchedResults<Note>
-   @Binding var searchText : String
+    var items: FetchedResults<Note>
+    @Binding var searchText : String
     var vm : NoteVM
     var type: NoteType
     var shareCompletion: (Note) -> Void
@@ -26,19 +26,47 @@ struct NoteListView: View{
         VStack{
             ListView()
         }
-        }
+    }
     
     private func ListView() -> some View {
         let isEmpty = (type == .completed ? loadCompletedNotes(searchText: searchText) : loadInCompletedNotes(searchText: searchText)).isEmpty
-      return  VStack{
-            if isEmpty{
-              EmptyField()
+        return  VStack{
+            if isEmpty && items.count == 0{
+                EmptyField()
             }else{
-                NoteList()
+                SearchBar(text: $searchText)
+                    .padding(.top,10)
+                NoteView()
             }
         }
     }
     
+    private func NoteView() -> some View {
+        Group{
+            switch type {
+            case .completed:
+                if loadCompletedNotes(searchText: searchText).isEmpty{
+                    NoAvailableNotes()
+                }else{
+                    NoteList()
+                }
+            case .incompleted:
+                if loadInCompletedNotes(searchText: searchText).isEmpty{
+                    NoAvailableNotes()
+                }else{
+                    NoteList()
+                }
+            }
+        }
+    }
+    
+    private func NoAvailableNotes() -> some View {
+        Group{
+            Spacer()
+            Text(Strings.noAvailableNotes)
+            Spacer()
+        }
+    }
     private func EmptyField() -> some View {
         VStack{
             Image("note")
@@ -50,32 +78,26 @@ struct NoteListView: View{
                 .foregroundColor(Color.indigo)
         }
     }
+    
     private func NoteList() -> some View {
         List {
             ForEach(type == .completed ? loadCompletedNotes(searchText: searchText) : loadInCompletedNotes(searchText: searchText)) { item in
                 ZStack{
                     NoteItem(item: item)
                         .swipeActions(allowsFullSwipe: false) {
-                            Button {
-                                shareCompletion(item)
-                            } label: {
-                                Label(Strings.share, systemImage: "square.and.arrow.up.fill")
-                            }
-                            .tint(.indigo)
-                            Button(role: .destructive) {
-                                deleteCompletion(item)
-
-                            } label: {
-                                Label(Strings.delete, systemImage: "trash.fill")
-                            }
+                            ShareNoteField(item: item)
+                            DeleteNoteField(item: item)
                         }
                     
                     NavigationLink(destination:  NoteDetails(vm: vm, selectedNote: item,title: item.title!,details: item.data!)
+                        .onAppear{
+                            endTextEditing()
+                        }
                     ){
                         EmptyView()
                     }
                     .buttonStyle(PlainButtonStyle())
-                        .opacity(0)
+                    .opacity(0)
                     
                 }
             }.listRowSeparator(.hidden)
@@ -84,8 +106,27 @@ struct NoteListView: View{
                 .listRowBackground(Color.clear)
             
         }.listStyle(.plain)
-//            .searchable(text: $searchText)
-//            .foregroundColor(Color.indigo)
+    }
+    
+    private func ShareNoteField(item: Note) -> some View {
+        Group{
+            Button {
+                shareCompletion(item)
+            } label: {
+                Label(Strings.share, systemImage: "square.and.arrow.up.fill")
+            }
+            .tint(.indigo)
+        }
+    }
+    private func DeleteNoteField(item: Note) -> some View {
+        Group{
+            Button(role: .destructive) {
+                deleteCompletion(item)
+                
+            } label: {
+                Label(Strings.delete, systemImage: "trash.fill")
+            }
+        }
     }
     
     private func NoteItem(item: Note) -> some View {
@@ -95,16 +136,16 @@ struct NoteListView: View{
                     .foregroundColor(item.isCompleted ? Color.indigo : Color.secondary)
                     .onTapGesture {
                         item.isCompleted.toggle()
-                            vm.editNote(note: vm.mapNoteEntityToModel(note: item))
-                            if item.isCompleted{
-                               playSoundCompletion()
+                        vm.editNote(note: vm.mapNoteEntityToModel(note: item))
+                        if item.isCompleted{
+                            playSoundCompletion()
                         }
                     }
                 Text(item.title!)
                     .foregroundColor(.indigo)
                     .strikethrough(type == .completed ? true : false)
                 Spacer().frame(maxWidth: .infinity)
-               
+                
             }.padding()
                 .background(Color.indigo.opacity(0.2))
                 .cardView()
@@ -117,7 +158,7 @@ struct NoteListView: View{
         let filteredNotes = items.filter { !$0.isCompleted}
         return loadFilteredNotes(searchText: searchText, notes: filteredNotes)
     }
-
+    
     private func loadCompletedNotes(searchText: String) ->  [FetchedResults<Note>.Element] {
         let filteredNotes = items.filter { $0.isCompleted}
         return loadFilteredNotes(searchText: searchText, notes: filteredNotes)
